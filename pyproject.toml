@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "custom-antidetect-browser"
+version = "0.1.0"
+description = "A professional antidetect browser with C++-level fingerprint spoofing"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MPL-2.0"}
+authors = [
+    {name = "Custom Browser Team", email = "dev@example.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: C++",
+]
+
+dependencies = [
+    "playwright>=1.40.0",
+    "browserforge>=0.2.0",
+    "orjson>=3.9.0",
+    "cryptography>=41.0.0",
+    "click>=8.1.0",
+    "flet>=0.19.0",
+    "pydantic>=2.5.0",
+]
+
+[project.scripts]
+custom-browser = "custom_browser.cli:main"
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/custom-antidetect"
+"Bug Reports" = "https://github.com/yourusername/custom-antidetect/issues"
+
+[tool.setuptools.packages.find]
+where = ["pythonlib"]
+include = ["custom_browser*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

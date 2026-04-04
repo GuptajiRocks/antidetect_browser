@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+src/firefox-source/build/
+src/firefox-source/obj-*/
+src/firefox-source/.bootstrapped
+
+# Profile storage
+profiles/*.enc
+profiles/*.json
+!profiles/.gitkeep
+firefox-source/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node modules (if any)
+node_modules/
+
+# Binary files
+*.bin
+*.exe
+*.dmg
+*.deb
+*.rpm
