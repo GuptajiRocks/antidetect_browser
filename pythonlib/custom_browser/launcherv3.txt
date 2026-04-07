@@ -1,0 +1,45 @@
+import os
+from typing import Optional, Dict, Any
+from camoufox.sync_api import Camoufox
+# from camoufox.async_api import AsyncCamoufox # Use this for async code
+
+class BrowserLauncher:
+    """
+    Launches a Camoufox browser instance using the official API.
+    """
+    @staticmethod
+    def launch(
+        profile_data: Dict[str, Any],
+        headless: bool = False,
+        block_images: bool = False,
+        block_webrtc: bool = True
+    ) -> None:
+        """
+        Launches the browser with a given profile configuration.
+        """
+        fingerprint = profile_data.get('fingerprint', {})
+        proxy_config = profile_data.get('proxy')
+
+        # Prepare the proxy dictionary for Camoufox
+        proxy = None
+        if proxy_config and 'url' in proxy_config:
+            # The format expected by Playwright/Camoufox
+            proxy = {'server': proxy_config['url']}
+
+        # Launch Camoufox
+        with Camoufox(
+            headless=headless,
+            proxy=proxy,
+            geoip=True,  # Automatically set locale/timezone based on proxy IP
+            block_images=block_images,
+            block_webrtc=block_webrtc,
+            # You can pass a custom config dict here to override specific fingerprint properties
+            # config={
+            #     "platform": fingerprint.get('platform'),
+            #     "userAgent": fingerprint.get('userAgent'),
+            # }
+        ) as browser:
+            # Create a new page and go to a URL
+            page = browser.new_page()
+            page.goto("https://example.com")
+            # The context manager will close the browser when exiting

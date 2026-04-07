@@ -20,6 +20,9 @@ help: ## Show this help message
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
+list-prof:
+	python -m custom_browser.cli list
+	
 install: ## Install Python dependencies and Playwright browsers
 	pip install -r build/requirements.txt
 	playwright install firefox
@@ -51,3 +54,6 @@ dev: ## Setup development environment
 
 update-camoufox: ## Update Camoufox source to latest
 	cd src/firefox-source && git pull
+
+workrun:
+	python -m custom_browser.cli launch work

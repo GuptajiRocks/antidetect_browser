@@ -1,22 +1,41 @@
-import subprocess, os, json
-from .fingerprint_generator import FingerprintGenerator
-from .profile_manager import ProfileManager
+import os
+from typing import Any, Dict, Optional
 
-BROWSER_BINARY_PATH = "./build/camoufox/firefox"
+from camoufox.sync_api import Camoufox
+
 
 class BrowserLauncher:
     @staticmethod
-    def launch(profile_id: str, headless: bool = False):
-        profile = ProfileManager.load_profile(profile_id)
-        fingerprint = profile.get("fingerprint", FingerprintGenerator.generate_random())
-        config_json = json.dumps(fingerprint)
-        # Split the config into multiple env vars if it's too long
-        chunks = [config_json[i:i+32000] for i in range(0, len(config_json), 32000)]
-        env = os.environ.copy()
-        for i, chunk in enumerate(chunks):
-            env[f"CAMOU_CONFIG_{i+1}"] = chunk
-        env["CAMOU_CONFIG_COUNT"] = str(len(chunks))
-        cmd = [BROWSER_BINARY_PATH, "--profile", profile_id]
-        if headless:
-            cmd.append("--headless")
-        subprocess.Popen(cmd, env=env)
+    def launch(
+        profile_data: Dict[str, Any],
+        headless: bool = False,
+        block_images: bool = False,
+        block_webrtc: bool = True,
+    ) -> None:
+        proxy_config = profile_data.get("proxy")
+        proxy = None
+        if proxy_config and "url" in proxy_config:
+            proxy = {"server": proxy_config["url"]}
+
+        custom_fingerprint = profile_data.get("custom_fingerprint", {})
+
+        with Camoufox(
+            headless=headless,
+            proxy=proxy,
+            geoip=True,
+            block_images=block_images,
+            block_webrtc=block_webrtc,
+            config=custom_fingerprint if custom_fingerprint else None,
+        ) as browser:
+            page = browser.new_page()
+            # Optionally open a default URL or let the user interact
+            page.goto("https://pixelscan.net")
+            print("Browser launched. Press Ctrl+C to exit.")
+            try:
+                # Keep browser open until user interrupts
+                import time
+
+                while True:
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                print("\nClosing browser...")

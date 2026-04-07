@@ -3,7 +3,7 @@
 import random
 from typing import Any, Dict
 
-from browserforge import FingerprintGenerator as BFGenerator
+from browserforge.fingerprints import FingerprintGenerator as BFGenerator
 
 
 class FingerprintGenerator:
