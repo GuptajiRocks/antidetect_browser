@@ -3,6 +3,9 @@
 A professional antidetect browser that creates isolated browser profiles with realistic fingerprints. Built on [Camoufox](https://github.com/daijro/camoufox) – no compilation required, uses pre‑built binaries.
 
 ## 🗂️ Project Structure
+## 🗂️ Project Structure
+
+```
 custom-antidetect/
 ├── build/
 │   └── requirements.txt          # Python dependencies
@@ -12,11 +15,11 @@ custom-antidetect/
 │       ├── launcher.py           # Browser launch logic (uses Camoufox)
 │       ├── profile_manager.py    # Encrypted profile storage
 │       └── fingerprint_generator.py (optional)
-├── profiles/                     # Encrypted profile files (auto‑created)
+├── profiles/                     # Encrypted profile files (auto-created)
 ├── pyproject.toml                # Package configuration
 ├── setup.py                      # Install script
 └── README.md
-
+```
 
 ## ✨ Features
 
