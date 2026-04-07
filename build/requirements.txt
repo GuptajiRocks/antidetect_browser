@@ -1,0 +1,12 @@
+# Core antidetect browser (includes Playwright & binary management)
+#camoufox[geoip]>=1.3.0
+
+# Profile management & encryption
+cryptography>=41.0.0
+
+# CLI & utilities
+click>=8.1.0
+python-dotenv>=1.0.0
+
+# Optional: if you still want custom fingerprint generation
+browserforge>=0.2.0
