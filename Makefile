@@ -22,7 +22,10 @@ help: ## Show this help message
 
 list-prof:
 	python -m custom_browser.cli list
-	
+
+update_cam:
+	python -m camoufox fetch
+
 install: ## Install Python dependencies and Playwright browsers
 	pip install -r build/requirements.txt
 	playwright install firefox
@@ -54,6 +57,14 @@ dev: ## Setup development environment
 
 update-camoufox: ## Update Camoufox source to latest
 	cd src/firefox-source && git pull
+
+## creating a new profile
+create_profile-%:
+	python -m custom_borwser.cli create --name "$*"
+
+## launching that specific profile
+launch-%:
+	python -m custom_browser.cli launch $*
 
 workrun:
 	python -m custom_browser.cli launch work
